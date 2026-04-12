@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Desktop Cat</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="hud">
+        <span id="layout-label">…</span>
+      </div>
+      <div class="stage-floor" aria-hidden="true"></div>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>
