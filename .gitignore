@@ -4,3 +4,6 @@ dist-electron
 out
 *.log
 .DS_Store
+*.tsbuildinfo
+src/**/*.js
+src/**/*.d.ts

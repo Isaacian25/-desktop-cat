@@ -3,15 +3,39 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "out/main/index.js",
+  "main": "out/main/index.cjs",
   "scripts": {
-    "dev": "electron-vite dev",
+    "dev": "ELECTRON_RUN_AS_NODE= electron-vite dev",
     "build": "electron-vite build",
-    "preview": "electron-vite preview"
+    "dist": "npm run build && electron-builder",
+    "dist:mac": "npm run build && electron-builder --mac dmg zip",
+    "preview": "ELECTRON_RUN_AS_NODE= electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.web.json && tsc --noEmit -p tsconfig.node.json",
+    "verify": "npm run typecheck && npm run build",
+    "verify:dev": "npm run verify && npm run dev"
+  },
+  "build": {
+    "appId": "com.desktopcat.app",
+    "productName": "Desktop Cat",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.entertainment",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    }
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "electron": "^34.5.8",
+    "electron-builder": "^26.8.1",
     "electron-vite": "^2.3.0",
     "typescript": "^5.8.3",
     "vite": "^5.4.18"

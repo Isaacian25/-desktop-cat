@@ -5,9 +5,18 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "strict": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ],
+    "noEmit": true
   },
-  "include": ["src/main/**/*.ts", "src/preload/**/*.ts", "src/renderer/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ]
 }

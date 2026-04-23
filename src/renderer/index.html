@@ -11,9 +11,111 @@
   </head>
   <body>
     <div id="app">
-      <div class="hud">
-        <span id="layout-label">…</span>
+      <div class="hud" id="dev-hud">
+        <span id="layout-label">舞台信息加载中…</span>
+        <span id="config-label">配置加载中…</span>
+        <span id="mode-label">当前模式 · 陪伴</span>
+        <span id="runtime-label">运行状态加载中…</span>
+        <span id="phase-label">追逐阶段 · 待机</span>
+        <span id="mood-label">心情 · 平静</span>
+        <span id="health-label">状态 · 冻干=0/12 · 交互捕获=否</span>
       </div>
+
+      <button id="user-menu-toggle" type="button" aria-label="打开宠物菜单">🐾</button>
+      <div id="user-menu-tip" aria-hidden="true">点击右键展开菜单</div>
+      <div id="user-menu" role="group" aria-label="宠物菜单">
+        <div class="menu-group-title">选择猫咪品种 <span class="kbd">1/2/3</span></div>
+        <select id="user-breed">
+          <option value="chinese-garden">中华田园猫（1）</option>
+          <option value="abyssinian">阿比西尼亚猫（2）</option>
+          <option value="bengal">豹猫（3）</option>
+        </select>
+
+        <div class="menu-group-title">互动</div>
+        <button id="user-feed" type="button">
+          <div class="menu-main"><span class="menu-title">喂冻干</span><span class="menu-sub">切换到喂食模式</span></div>
+          <span class="kbd">F8</span>
+        </button>
+        <button id="user-pet" type="button">
+          <div class="menu-main"><span class="menu-title">撸猫</span><span class="menu-sub">回到陪伴模式</span></div>
+          <span class="kbd">Esc</span>
+        </button>
+        <button id="user-teaser" type="button">
+          <div class="menu-main"><span class="menu-title">逗猫棒</span><span class="menu-sub">切换到追逐互动</span></div>
+          <span class="kbd">F9</span>
+        </button>
+
+        <div class="menu-group-title">系统</div>
+        <button id="user-mute" type="button">
+          <div class="menu-main"><span class="menu-title">声音：已开启</span><span class="menu-sub">点击切换静音</span></div>
+          <span class="kbd">M</span>
+        </button>
+        <button id="user-feedback" type="button">
+          <div class="menu-main"><span class="menu-title">反馈建议 / Bug</span><span class="menu-sub">提交给开发团队</span></div>
+          <span class="kbd">F</span>
+        </button>
+        <button id="user-move" type="button">
+          <div class="menu-main"><span class="menu-title">移动位置：关闭</span><span class="menu-sub">开启后拖拽猫咪定位</span></div>
+          <span class="kbd">G</span>
+        </button>
+        <button id="user-dev-ui" type="button">
+          <div class="menu-main"><span class="menu-title">UI参数</span><span class="menu-sub">技术模式入口</span></div>
+          <span class="kbd">Shift+U</span>
+        </button>
+        <button id="user-exit" type="button">
+          <div class="menu-main"><span class="menu-title">退出程序</span><span class="menu-sub">关闭桌宠</span></div>
+          <span class="kbd">Cmd/Ctrl+Q</span>
+        </button>
+      </div>
+
+      <div id="ui-tuner" role="group" aria-label="UI调参面板">
+        <div class="tuner-head">
+          <span>UI 调参（可拖动）</span>
+          <div class="tuner-actions">
+            <button id="tune-interaction-toggle" type="button">暂停互动</button>
+            <button id="tune-hide" type="button">隐藏</button>
+          </div>
+        </div>
+        <label>缩放 <input id="tune-scale" type="range" min="0.8" max="1.4" step="0.05" value="1" /> <span id="tune-scale-v">1.00</span></label>
+        <label>猫种 <select id="tune-breed"><option value="chinese-garden">中华田园猫</option><option value="abyssinian">阿比西尼亚猫</option><option value="bengal">豹猫</option></select> <span id="tune-breed-v">中华田园猫</span></label>
+        <label>右边距 <input id="tune-right" type="range" min="0" max="180" step="5" value="35" /> <span id="tune-right-v">35</span></label>
+        <label>下沉量 <input id="tune-sink" type="range" min="0" max="60" step="2" value="60" /> <span id="tune-sink-v">60</span></label>
+        <label>地面透明 <input id="tune-floor" type="range" min="0" max="0.2" step="0.01" value="0.00" /> <span id="tune-floor-v">0.00</span></label>
+        <label>爽点X <input id="tune-spot-x" type="range" min="0.2" max="0.8" step="0.02" value="0.60" /> <span id="tune-spot-x-v">0.60</span></label>
+        <label>爽点Y <input id="tune-spot-y" type="range" min="0.2" max="0.8" step="0.02" value="0.42" /> <span id="tune-spot-y-v">0.42</span></label>
+        <label>半径 <input id="tune-spot-r" type="range" min="0.12" max="0.36" step="0.01" value="0.22" /> <span id="tune-spot-r-v">0.22</span></label>
+        <label>反馈增益 <input id="tune-spot-gain" type="range" min="0.05" max="0.4" step="0.01" value="0.20" /> <span id="tune-spot-gain-v">0.20</span></label>
+        <label>喂食最小数 <input id="tune-feed-min" type="range" min="1" max="4" step="1" value="1" /> <span id="tune-feed-min-v">1</span></label>
+        <label>喂食最大数 <input id="tune-feed-max" type="range" min="1" max="6" step="1" value="3" /> <span id="tune-feed-max-v">3</span></label>
+        <label>场上上限 <input id="tune-feed-cap" type="range" min="4" max="24" step="1" value="12" /> <span id="tune-feed-cap-v">12</span></label>
+        <label>喂食冷却 <input id="tune-feed-cd" type="range" min="0.08" max="0.5" step="0.01" value="0.16" /> <span id="tune-feed-cd-v">0.16</span></label>
+        <label>追食速度 <input id="tune-feed-speed" type="range" min="0.8" max="1.6" step="0.05" value="1.10" /> <span id="tune-feed-speed-v">1.10</span></label>
+        <label>冻干存活 <input id="tune-feed-life" type="range" min="2" max="20" step="1" value="8" /> <span id="tune-feed-life-v">8s</span></label>
+        <label>吃后停顿 <input id="tune-feed-pause" type="range" min="0.00" max="0.60" step="0.01" value="0.18" /> <span id="tune-feed-pause-v">0.18s</span></label>
+        <label>碎屑开关 <input id="tune-fx-crumbs-on" type="checkbox" checked /> <span id="tune-fx-crumbs-on-v">on</span></label>
+        <label>碎屑上限 <input id="tune-fx-crumbs-max" type="range" min="0" max="80" step="1" value="28" /> <span id="tune-fx-crumbs-max-v">28</span></label>
+        <label>碎屑寿命 <input id="tune-fx-crumbs-life" type="range" min="0.2" max="2" step="0.05" value="0.55" /> <span id="tune-fx-crumbs-life-v">0.55s</span></label>
+        <label>单次碎屑 <input id="tune-fx-crumbs-per" type="range" min="0" max="12" step="1" value="5" /> <span id="tune-fx-crumbs-per-v">5</span></label>
+        <button id="tune-reset" type="button">恢复默认（全部）</button>
+      </div>
+      <button id="ui-tuner-dock" type="button" aria-label="显示调参面板">调参</button>
+
+      <div id="stage-world" aria-hidden="true">
+        <div id="teaser-anchor">
+          <img class="toy-gif" src="/ui/teaser-stick-primary.gif" alt="逗猫棒" />
+        </div>
+        <div id="feeding-anchor">
+          <span class="spout"></span>
+        </div>
+        <div id="treats-layer"></div>
+        <div id="cat-shell">
+          <div id="cat" data-phase="idle"></div>
+          <div id="lick-fx" aria-hidden="true"></div>
+          <div id="petting-fx" aria-hidden="true"></div>
+          <div id="purr-fx" aria-hidden="true">❤</div>
+        </div>
+      </div>
+
       <div class="stage-floor" aria-hidden="true"></div>
     </div>
     <script type="module" src="./src/main.ts"></script>

@@ -5,7 +5,12 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "strict": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ],
+    "noEmit": true
   },
-  "include": ["electron.vite.config.ts"]
+  "include": [
+    "electron.vite.config.ts"
+  ]
 }

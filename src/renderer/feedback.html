@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>提交反馈</title>
+  </head>
+  <body>
+    <main class="feedback-page">
+      <div class="feedback-window-top" aria-hidden="true">
+        <div class="window-controls">
+          <button id="feedback-window-close" type="button" aria-label="关闭">×</button>
+        </div>
+      </div>
+      <section class="feedback-card" role="dialog" aria-label="提交反馈">
+        <h1 class="feedback-title">提交反馈</h1>
+        <p class="feedback-sub">每日最多提交1条，用于研发者持续的改进与优化</p>
+
+        <label>类型
+          <select id="feedback-kind">
+            <option value="bug">Bug问题</option>
+            <option value="idea">产品建议</option>
+            <option value="other">其他</option>
+          </select>
+        </label>
+
+        <label>内容
+          <textarea id="feedback-message" rows="6" placeholder="描述你的问题或建议…"></textarea>
+        </label>
+
+        <label>联系方式（可选）
+          <input id="feedback-contact" type="text" placeholder="邮箱 / 微信 / 其他" />
+        </label>
+
+        <label class="feedback-check">
+          <input id="feedback-ctx" type="checkbox" checked />
+          <span>附带当前基础上下文（模式/猫种/静音等）</span>
+        </label>
+
+        <div class="feedback-actions">
+          <button id="feedback-cancel" type="button">取消</button>
+          <button id="feedback-submit" type="button">提交</button>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./src/feedback.ts"></script>
+  </body>
+</html>

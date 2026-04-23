@@ -1,0 +1,136 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  color: #1d1d1f;
+  background: #ffffff;
+}
+
+.feedback-page {
+  padding: 40px 24px;
+  position: relative;
+}
+
+.feedback-card {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  border-radius: 0;
+  background: #ffffff;
+  border: none;
+  box-shadow: none;
+}
+
+.feedback-window-top {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  left: 16px;
+  height: 24px;
+  -webkit-app-region: drag;
+}
+
+.window-controls {
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+}
+
+.window-controls button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #d9d9de;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #3f3f46;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.window-controls button:hover {
+  background: #f3f4f6;
+}
+
+.feedback-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.feedback-sub {
+  margin: 0;
+  color: #53535a;
+  font-size: 12px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  color: #3d3835;
+}
+
+select,
+textarea,
+input[type='text'] {
+  border: 1px solid #d9d9de;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #fff;
+  font-size: 13px;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+select:focus-visible,
+textarea:focus-visible,
+input[type='text']:focus-visible {
+  border-color: #8aa2f8;
+  box-shadow: 0 0 0 3px rgba(138, 162, 248, 0.28);
+}
+
+.feedback-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.feedback-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.feedback-actions button {
+  min-height: 34px;
+  border: 1px solid #d9d9de;
+  border-radius: 9px;
+  padding: 7px 12px;
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.feedback-actions button:hover {
+  background: #f1f4ff;
+  border-color: #becbf8;
+}
+
+.feedback-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
