@@ -138,7 +138,7 @@ function createWindow(): BrowserWindow {
       preload: resolvePreloadPath(),
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: false
+      sandbox: true
     }
   })
 
@@ -179,7 +179,7 @@ function createFeedbackWindow(): BrowserWindow {
       preload: resolvePreloadPath(),
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: false
+      sandbox: true
     }
   })
   win.setMenuBarVisibility(false)

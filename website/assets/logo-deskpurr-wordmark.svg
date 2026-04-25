@@ -1,0 +1,18 @@
+<svg width="640" height="180" viewBox="0 0 640 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="180" rx="20" fill="#F7F5EF"/>
+
+  <!-- Wordmark -->
+  <text x="54" y="118"
+    font-family="Avenir Next, Nunito, Poppins, PingFang SC, Microsoft YaHei, sans-serif"
+    font-size="72"
+    font-weight="700"
+    letter-spacing="-1.2"
+    fill="#2F2A24">DeskPurr</text>
+
+  <!-- Brand accent: cat-ear hint over P -->
+  <path d="M333 54L346 32L357 54Z" fill="#D5A257"/>
+  <path d="M353 54L366 32L377 54Z" fill="#D5A257"/>
+
+  <!-- Soft purr wave near ending rr -->
+  <path d="M492 128C500 122 508 122 516 128C524 134 532 134 540 128" stroke="#D5A257" stroke-width="4" stroke-linecap="round"/>
+</svg>

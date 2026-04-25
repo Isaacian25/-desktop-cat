@@ -16,6 +16,9 @@ export class CatActor {
   constructor(el: HTMLElement, visuals: CatVisualManifest) {
     this.el = el
     this.visuals = visuals
+    // Set dimensions once during construction to avoid unnecessary reflows
+    this.el.style.width = `${this.visuals.width}px`
+    this.el.style.height = `${this.visuals.height}px`
     this.applyFrame()
   }
 
@@ -65,8 +68,6 @@ export class CatActor {
     const anim = this.feedingState === 'hold' ? this.visuals.feeding?.eat : this.feedingState ? this.visuals.feeding?.[this.feedingState] : this.visuals.byPhase[this.currentPhase]
     if (!anim) return
     const frameSrc = anim.frames[this.feedingState ? this.feedingFrameIndex : this.frameIndex]
-    this.el.style.width = `${this.visuals.width}px`
-    this.el.style.height = `${this.visuals.height}px`
 
     if (!frameSrc) {
       this.currentImage = null

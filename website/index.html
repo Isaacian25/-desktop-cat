@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DeskPurr | Isaacian × Cursor</title>
+    <meta name="description" content="0 代码基础，也能把产品做出来。Isaacian × Cursor 共创 DeskPurr。" />
+    <style>
+      :root {
+        --bg: oklch(0.98 0.01 85);
+        --surface: oklch(0.995 0.005 85);
+        --surface-soft: oklch(0.965 0.012 85);
+        --text: oklch(0.23 0.03 80);
+        --text-soft: oklch(0.44 0.02 80);
+        --brand: oklch(0.66 0.13 75);
+        --brand-ink: oklch(0.34 0.08 72);
+        --line: oklch(0.88 0.01 85);
+        --shadow: 0 16px 48px oklch(0.44 0.02 80 / 0.12);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 84% 10%, oklch(0.94 0.04 82) 0%, transparent 42%),
+          radial-gradient(circle at 8% 88%, oklch(0.94 0.03 118) 0%, transparent 46%),
+          var(--bg);
+      }
+      .shell {
+        width: min(1080px, 92vw);
+        margin: 0 auto;
+        padding: 42px 0 72px;
+      }
+      .topbar {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .lang-switch {
+        display: inline-flex;
+        gap: 4px;
+        padding: 4px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+      .lang-btn {
+        border: 0;
+        background: transparent;
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-soft);
+        cursor: pointer;
+      }
+      .lang-btn.is-active {
+        background: var(--brand);
+        color: oklch(0.99 0.01 85);
+      }
+      .hero {
+        margin-top: 14px;
+        display: grid;
+        gap: 24px;
+        grid-template-columns: 1.08fr 0.92fr;
+        align-items: center;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--brand-ink);
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+      h1 {
+        margin: 16px 0;
+        font-size: clamp(2.1rem, 5.2vw, 4rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+      }
+      .lead {
+        margin: 0;
+        max-width: 40ch;
+        color: var(--text-soft);
+        line-height: 1.8;
+      }
+      .cta-row {
+        margin-top: 24px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        min-height: 44px;
+        border-radius: 999px;
+        padding: 0 18px;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .btn-primary {
+        background: var(--brand);
+        color: oklch(0.99 0.01 85);
+        box-shadow: 0 10px 24px oklch(0.64 0.11 75 / 0.34);
+      }
+      .btn-secondary {
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+      .card, .panel {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+      }
+      .card {
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+      .card h2 { margin: 0; }
+      .card p {
+        margin: 12px 0 0;
+        color: var(--text-soft);
+        line-height: 1.75;
+      }
+      .meta {
+        margin-top: 16px;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(3, minmax(120px, 1fr));
+      }
+      .meta-item {
+        background: var(--surface-soft);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+      }
+      .meta-k { font-size: 12px; color: var(--text-soft); }
+      .meta-v { margin-top: 5px; font-weight: 700; }
+      section { margin-top: 56px; }
+      .section-title {
+        margin: 0 0 16px;
+        font-size: clamp(1.35rem, 2.2vw, 2rem);
+      }
+      .grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+      .panel { padding: 20px; }
+      .panel h3 { margin: 0 0 8px; font-size: 1.05rem; }
+      .panel p { margin: 0; color: var(--text-soft); line-height: 1.7; }
+      .preview-media {
+        margin-top: 10px;
+        min-height: 160px;
+        border: 1px dashed var(--line);
+        border-radius: 12px;
+        background: var(--surface-soft);
+        overflow: hidden;
+      }
+      .preview-media img {
+        width: 100%;
+        height: 170px;
+        object-fit: cover;
+        display: block;
+      }
+      .preview-caption {
+        padding: 8px 10px;
+        font-size: 12px;
+        color: var(--text-soft);
+      }
+      footer {
+        margin-top: 60px;
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 14px;
+      }
+      @media (max-width: 900px) {
+        .hero { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="topbar">
+        <div class="lang-switch">
+          <button id="lang-zh" class="lang-btn is-active" type="button">中文</button>
+          <button id="lang-en" class="lang-btn" type="button">EN</button>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div>
+          <span class="badge" data-i18n="badge"></span>
+          <h1 data-i18n="heroTitle"></h1>
+          <p class="lead" data-i18n="heroLead"></p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="../release/Desktop Cat-0.0.1-arm64.dmg" data-i18n="downloadBtn"></a>
+            <a class="btn btn-secondary" href="https://github.com/Isaacian25/-desktop-cat" target="_blank" rel="noreferrer" data-i18n="githubBtn"></a>
+          </div>
+        </div>
+        <aside class="card">
+          <h2 data-i18n="madeTitle"></h2>
+          <p data-i18n="madeDesc"></p>
+          <div class="meta">
+            <div class="meta-item"><div class="meta-k" data-i18n="metaPlatformKey"></div><div class="meta-v" data-i18n="metaPlatformVal"></div></div>
+            <div class="meta-item"><div class="meta-k" data-i18n="metaTechKey"></div><div class="meta-v" data-i18n="metaTechVal"></div></div>
+            <div class="meta-item"><div class="meta-k" data-i18n="metaModeKey"></div><div class="meta-v" data-i18n="metaModeVal"></div></div>
+          </div>
+        </aside>
+      </section>
+
+      <section>
+        <h2 class="section-title" data-i18n="valueTitle"></h2>
+        <div class="grid">
+          <article class="panel"><h3 data-i18n="value1Title"></h3><p data-i18n="value1Desc"></p></article>
+          <article class="panel"><h3 data-i18n="value2Title"></h3><p data-i18n="value2Desc"></p></article>
+          <article class="panel"><h3 data-i18n="value3Title"></h3><p data-i18n="value3Desc"></p></article>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title" data-i18n="demoTitle"></h2>
+        <div class="grid">
+          <article class="panel">
+            <h3 data-i18n="demoPetTitle"></h3>
+            <div class="preview-media">
+              <img src="./assets/previews/petting.gif" alt="撸猫预览图" />
+              <div class="preview-caption">GIF Preview</div>
+            </div>
+          </article>
+          <article class="panel">
+            <h3 data-i18n="demoFeedTitle"></h3>
+            <div class="preview-media">
+              <img src="./assets/previews/feeding.gif" alt="喂食预览图" />
+              <div class="preview-caption">GIF Preview</div>
+            </div>
+          </article>
+          <article class="panel">
+            <h3 data-i18n="demoTeaserTitle"></h3>
+            <div class="preview-media">
+              <img src="./assets/previews/teaser.gif" alt="逗猫棒预览图" />
+              <div class="preview-caption">GIF Preview</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <footer data-i18n="footer"></footer>
+    </main>
+
+    <script>
+      const I18N = {
+        zh: {
+          htmlLang: "zh-CN",
+          title: "DeskPurr | Isaacian × Cursor",
+          description: "0 代码基础，也能把产品做出来。Isaacian × Cursor 共创 DeskPurr。",
+          badge: "DeskPurr · AI共创标杆作品",
+          heroTitle: "一个人，0 代码基础，也能把创意做成产品",
+          heroLead: "Isaacian × Cursor，把 DeskPurr 从想法直接做到可交付。",
+          downloadBtn: "下载 mac 测试包",
+          githubBtn: "查看 GitHub",
+          madeTitle: "我们做出了什么",
+          madeDesc: "覆盖待机、逗猫棒、撸猫、喂食四大场景。Isaacian 定方向，Cursor 端到端实现。",
+          metaPlatformKey: "平台",
+          metaPlatformVal: "macOS 桌面端",
+          metaTechKey: "技术",
+          metaTechVal: "Electron + TS",
+          metaModeKey: "模式",
+          metaModeVal: "本地离线优先",
+          valueTitle: "DeskPurr 不只是桌宠，更是一次 AI 工程能力的落地样本。",
+          value1Title: "可感知的宠物陪伴",
+          value1Desc: "低打扰常驻桌面，轻互动、即时反馈、持续陪伴。",
+          value2Title: "可验证的工程实力",
+          value2Desc: "处理了层级、穿透、状态机、音效概率、反馈链路等真实问题。",
+          value3Title: "可持续的迭代能力",
+          value3Desc: "文档、自检、回滚已到位，后续扩展更快更稳。",
+          demoTitle: "互动模式预览",
+          demoPetTitle: "撸猫",
+          demoFeedTitle: "喂食",
+          demoTeaserTitle: "逗猫棒",
+          demoPlaceholder: "即将替换为演示图",
+          footer: "代码由 Cursor 完成；Isaacian 负责产品与设计，并借助即梦 AI 还原猫咪动效。"
+        },
+        en: {
+          htmlLang: "en",
+          title: "DeskPurr | Isaacian × Cursor",
+          description: "Zero coding background, real product shipped. Isaacian × Cursor co-created DeskPurr.",
+          badge: "DeskPurr · Flagship AI Co-Creation",
+          heroTitle: "Zero coding background. Real product shipped.",
+          heroLead: "Isaacian × Cursor turned DeskPurr from idea to delivery.",
+          downloadBtn: "Download macOS Build",
+          githubBtn: "View on GitHub",
+          madeTitle: "What We Built",
+          madeDesc: "Covers four core scenes: idle, teaser wand, petting, and feeding. Isaacian led direction, Cursor shipped end-to-end.",
+          metaPlatformKey: "Platform",
+          metaPlatformVal: "macOS Desktop",
+          metaTechKey: "Tech",
+          metaTechVal: "Electron + TypeScript",
+          metaModeKey: "Mode",
+          metaModeVal: "Offline-first",
+          valueTitle: "What Kind of Product Is DeskPurr",
+          value1Title: "Perceivable Pet Companionship",
+          value1Desc: "Low interruption on desktop with gentle interaction and instant feedback.",
+          value2Title: "Proven Engineering Capability",
+          value2Desc: "Built for real product challenges: layering, pass-through, state machines, audio probability, and feedback flow.",
+          value3Title: "Sustainable Iteration Capability",
+          value3Desc: "Docs, checks, and rollback are in place for faster, safer iteration.",
+          demoTitle: "Interaction Mode Preview",
+          demoPetTitle: "Petting",
+          demoFeedTitle: "Feeding",
+          demoTeaserTitle: "Teaser Wand",
+          demoPlaceholder: "Demo visual coming soon",
+          footer: "Cursor built the codebase. Isaacian led product and design, with Jimeng AI for animation recreation."
+        }
+      };
+      function setLang(lang) {
+        const pack = I18N[lang] || I18N.zh;
+        document.documentElement.lang = pack.htmlLang;
+        document.title = pack.title;
+        const desc = document.querySelector('meta[name="description"]');
+        if (desc) desc.setAttribute("content", pack.description);
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (key && pack[key]) el.textContent = pack[key];
+        });
+        document.getElementById("lang-zh").classList.toggle("is-active", lang === "zh");
+        document.getElementById("lang-en").classList.toggle("is-active", lang === "en");
+        localStorage.setItem("desktop-cat-site-lang", lang);
+      }
+      document.getElementById("lang-zh").addEventListener("click", () => setLang("zh"));
+      document.getElementById("lang-en").addEventListener("click", () => setLang("en"));
+      setLang(localStorage.getItem("desktop-cat-site-lang") === "en" ? "en" : "zh");
+    </script>
+  </body>
+</html>

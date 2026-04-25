@@ -1,95 +1,91 @@
 # Desktop Cat
 
-A lightweight desktop pet built with Electron.
+一只本地运行的桌面猫咪（Electron）。
 
-## Current Status
+An offline-first desktop cat companion built with Electron.
 
-- Transparent frameless window pinned to the bottom third of the screen
-- Versioned local config with migration entrypoint
-- IPC protocol shared across main/preload/renderer
-- System tray controls for mute/translucency/pause interaction
-- Teaser interaction loop with chase phases: `stalk -> windup -> dash`
-- Sweet-spot petting feedback in companion mode (hold left mouse and rub cat)
+## 给测试朋友：3分钟上手
 
-## Development
+### 1) 直接运行（推荐）
+
+- 打开 `release` 目录中的安装包或压缩包
+- macOS 可直接使用：
+  - `Desktop Cat-0.0.1-arm64.dmg`（安装）
+  - `Desktop Cat-0.0.1-arm64-mac.zip`（解压即用）
+- 首次若被系统拦截：右键 App -> 打开 -> 再确认一次
+
+### 2) 从源码运行（开发者）
 
 ```bash
 npm install
 npm run dev
 ```
 
-If local shell environment has `ELECTRON_RUN_AS_NODE=1`, scripts already clear it automatically.
+## Quick Start for Testers (EN)
 
-## Scripts
+### 1) Run directly (recommended)
 
-- `npm run dev` - run in development mode
-- `npm run build` - build main/preload/renderer bundles
-- `npm run preview` - preview production bundle
-- `npm run typecheck` - TypeScript project reference check
-- `npm run verify` - typecheck + build (does not open app window)
-- `npm run verify:dev` - run verify first, then launch app window
+- Open an installer or archive from the `release` directory
+- For macOS:
+  - `Desktop Cat-0.0.1-arm64.dmg` (install)
+  - `Desktop Cat-0.0.1-arm64-mac.zip` (unzip and run)
+- If macOS blocks first launch: right-click the app -> Open -> confirm
 
-## Controls
+### 2) Run from source (developers)
 
-- `F8` or `Cmd/Ctrl + 8`: enter feeding mode
-- `F9` or `Cmd/Ctrl + 9`: enter teaser mode
-- `Esc` or `Cmd/Ctrl + 0`: return to companion mode
-- `F10`: toggle fullscreen pause debug flag
-- User UI: top-right `🐾` menu for breed selection and in-app exit
-- User UI: menu includes in-app feedback submission (`F`)
-- `Shift + U`: show/hide developer overlays (HUD + tuner)
-- `U` (dev overlay enabled): show/hide UI tuning panel
-- Panel loop: `调参` (show) -> `隐藏` (hide) -> `调参` (show again), repeat safely
-- Feeding guardrails: active treats capped by `场上上限`; uneaten treats auto-despawn after `冻干存活` seconds
-- Tray menu: import/export local config JSON
-- Import config auto-creates timestamped `*.bak.json` backup in the same folder before applying
+```bash
+npm install
+npm run dev
+```
 
-## Locked UI Defaults (Finalized)
+## 交互说明（用户向）
 
-- Scale: `1.00`
-- Right margin: `35px`
-- Companion sink: `60px`
-- Floor opacity: `0.00`
-- Stage bottom inset: `50px`
-- Companion spawn: right side with `50px` logical startup offset, adjusted by current right-margin tuning
+- `右键` 桌面猫附近：打开用户菜单
+- `F8`：喂冻干
+- `F9`：逗猫棒
+- `Esc`：回到陪伴待机
+- `M`：静音开关
+- `F`：打开反馈窗口
+- `Cmd/Ctrl + Q`：退出程序
 
-Tuning values are persisted in `UserConfig.ui` (main-process config store) and restored on next launch.
+补充：
 
-`恢复默认（全部）` in the tuner panel resets UI, petting, and feeding tuning to defaults (with confirmation dialog).
+- 菜单里可切换猫咪品种、喂食、撸猫、逗猫、静音、退出
+- 反馈每天最多提交 1 条，达到上限后入口会置灰
 
-## Runtime Tuning Defaults
+## User Interactions (EN)
 
-- Feeding: `dropMin=1`, `dropMax=3`, `maxActiveTreats=12`, `dropCooldownSec=0.16`, `speedMultiplier=1.10`, `despawnSec=8`, `eatPauseSec=0.18`
-- Effects (crumbs): `enabled=true`, `maxCrumbs=28`, `crumbLifeSec=0.55`, `crumbsPerEat=5`
+- `Right-click` near the desktop cat: open user menu
+- `F8`: feeding mode
+- `F9`: teaser mode
+- `Esc`: back to companion idle mode
+- `M`: mute toggle
+- `F`: open feedback window
+- `Cmd/Ctrl + Q`: quit app
 
-## Delivery Regression Checklist
+Notes:
 
-- Launch app with `npm run dev`, confirm desktop cat appears and follows bottom-stage layout
-- Verify hotkeys: `F8` feeding, `F9` teaser, `Esc` back to companion, `U` show/hide panel
-- Verify panel loop and drag: drag panel, hide, reopen by `调参`, position persists across relaunch
-- Verify feeding bounds: treat count never exceeds `场上上限`; uneaten treats disappear after `冻干存活`
-- Verify health indicator updates in HUD (`mode`, `treats`, `capture`)
-- Run `npm run verify` successfully before delivery
+- Menu supports breed switch, feeding, petting, teaser, mute, and exit
+- Feedback submission is limited to 1 per day (entry becomes disabled after limit)
 
-## Documentation
+## 给技术同学
 
-- `docs/ARCHITECTURE.md` - module boundaries and runtime flow
-- `docs/COMPACT.md` - compressed project context from day-0 to now
-- `docs/DECISIONS.md` - product/engineering decisions and rationale
-- `docs/SELFCHECK.md` - release self-check and regression gates
-- `docs/INCIDENT-2026-04-14-duplicate-instances.md` - P0 incident archive and fix record
-- `docs/SOUNDS.md` - sound slots and audio asset spec
-- `docs/ASSET-INTAKE.md` - GIF-first asset upload and rollback intake guide
-- `docs/WORKLOG.md` - append-only lightweight iteration log
-- `CHANGELOG.md` - release-facing change summary
+- `npm run verify`：类型检查 + 构建（不启动窗口）
+- `npm run dist:mac`：打包 macOS 测试包（`dmg + zip`）
 
-## Offline-First Principle
+## For Engineers (EN)
 
-Runtime interaction is local-only. Network is only required for package installation and optional app updates.
+- `npm run verify`: typecheck + build (does not launch app window)
+- `npm run dist:mac`: package macOS build (`dmg + zip`)
 
-## Feedback Pipeline (Local-first)
+## 文档索引
 
-- Users can submit feedback from in-app menu (`反馈建议 / Bug`) or hotkey `F`.
-- Feedback is stored locally as NDJSON in app userData:
-  - `desktop-cat-feedback.ndjson`
-- Each entry includes a generated feedback id and optional runtime context.
+- `docs/WORKLOG.md`：迭代日志
+- `docs/SELFCHECK.md`：自检清单
+- `CHANGELOG.md`：版本变更
+
+## Docs Index (EN)
+
+- `docs/WORKLOG.md`: iteration log
+- `docs/SELFCHECK.md`: self-check checklist
+- `CHANGELOG.md`: release change history

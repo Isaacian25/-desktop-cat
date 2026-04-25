@@ -7,3 +7,5 @@ out
 *.tsbuildinfo
 src/**/*.js
 src/**/*.d.ts
+.tmp-assets/
+release/
