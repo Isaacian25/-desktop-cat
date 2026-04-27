@@ -157,6 +157,40 @@
       .panel { padding: 20px; }
       .panel h3 { margin: 0 0 8px; font-size: 1.05rem; }
       .panel p { margin: 0; color: var(--text-soft); line-height: 1.7; }
+      .guide-list {
+        display: grid;
+        gap: 10px;
+      }
+      .guide-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface-soft);
+      }
+      .guide-item b {
+        display: block;
+        font-size: 14px;
+      }
+      .guide-item span {
+        display: block;
+        color: var(--text-soft);
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      .guide-key {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 10px;
+        background: var(--surface);
+        white-space: nowrap;
+      }
       .preview-media {
         margin-top: 10px;
         min-height: 160px;
@@ -255,6 +289,35 @@
         </div>
       </section>
 
+      <section>
+        <h2 class="section-title" data-i18n="guideTitle"></h2>
+        <div class="card">
+          <div class="guide-list">
+            <div class="guide-item">
+              <div>
+                <b data-i18n="guideOpenTitle"></b>
+                <span data-i18n="guideOpenDesc"></span>
+              </div>
+              <div class="guide-key" data-i18n="guideOpenKey"></div>
+            </div>
+            <div class="guide-item">
+              <div>
+                <b data-i18n="guideModeTitle"></b>
+                <span data-i18n="guideModeDesc"></span>
+              </div>
+              <div class="guide-key" data-i18n="guideModeKey"></div>
+            </div>
+            <div class="guide-item">
+              <div>
+                <b data-i18n="guideQuitTitle"></b>
+                <span data-i18n="guideQuitDesc"></span>
+              </div>
+              <div class="guide-key" data-i18n="guideQuitKey"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer data-i18n="footer"></footer>
     </main>
 
@@ -289,6 +352,16 @@
           demoFeedTitle: "喂食",
           demoTeaserTitle: "逗猫棒",
           demoPlaceholder: "即将替换为演示图",
+          guideTitle: "操作指引",
+          guideOpenTitle: "打开菜单",
+          guideOpenDesc: "在桌宠附近右键，打开主菜单。",
+          guideOpenKey: "右键",
+          guideModeTitle: "常用快捷键",
+          guideModeDesc: "喂食 F8，逗猫棒 F9，返回陪伴 Esc。",
+          guideModeKey: "F8 / F9 / Esc",
+          guideQuitTitle: "退出程序",
+          guideQuitDesc: "从菜单点击退出，或使用系统快捷键。",
+          guideQuitKey: "Cmd/Ctrl + Q",
           footer: "代码由 Cursor 完成；Isaacian 负责产品与设计，并借助即梦 AI 还原猫咪动效。"
         },
         en: {
@@ -320,6 +393,16 @@
           demoFeedTitle: "Feeding",
           demoTeaserTitle: "Teaser Wand",
           demoPlaceholder: "Demo visual coming soon",
+          guideTitle: "Quick Start Guide",
+          guideOpenTitle: "Open the menu",
+          guideOpenDesc: "Right-click near the pet to open the main menu.",
+          guideOpenKey: "Right Click",
+          guideModeTitle: "Core hotkeys",
+          guideModeDesc: "Feeding F8, Teaser F9, Back to companion Esc.",
+          guideModeKey: "F8 / F9 / Esc",
+          guideQuitTitle: "Quit app",
+          guideQuitDesc: "Use the menu Exit action or system shortcut.",
+          guideQuitKey: "Cmd/Ctrl + Q",
           footer: "Cursor built the codebase. Isaacian led product and design, with Jimeng AI for animation recreation."
         }
       };
