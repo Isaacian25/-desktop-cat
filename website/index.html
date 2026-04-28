@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DeskPurr | Isaacian × Cursor</title>
     <meta name="description" content="0 代码基础，也能把产品做出来。Isaacian × Cursor 共创 DeskPurr。" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S9101XQ9CG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-S9101XQ9CG');
+    </script>
     <style>
       :root {
         --bg: oklch(0.98 0.01 85);
@@ -238,7 +247,7 @@
           <h1 data-i18n="heroTitle"></h1>
           <p class="lead" data-i18n="heroLead"></p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="../release/Desktop Cat-0.0.1-arm64.dmg" data-i18n="downloadBtn"></a>
+            <a id="download-btn" class="btn btn-primary" href="https://github.com/Isaacian25/-desktop-cat/releases" target="_blank" rel="noreferrer" data-i18n="downloadBtn"></a>
             <a class="btn btn-secondary" href="https://github.com/Isaacian25/-desktop-cat" target="_blank" rel="noreferrer" data-i18n="githubBtn"></a>
           </div>
         </div>
@@ -330,7 +339,7 @@
           badge: "DeskPurr · AI共创标杆作品",
           heroTitle: "一个人，0 代码基础，也能把创意做成产品",
           heroLead: "Isaacian × Cursor，把 DeskPurr 从想法直接做到可交付。",
-          downloadBtn: "下载 mac 测试包",
+          downloadBtn: "下载测试包（mac）",
           githubBtn: "查看 GitHub",
           madeTitle: "我们做出了什么",
           madeDesc: "覆盖待机、逗猫棒、撸猫、喂食四大场景。Isaacian 定方向，Cursor 端到端实现。",
@@ -371,7 +380,7 @@
           badge: "DeskPurr · Flagship AI Co-Creation",
           heroTitle: "Zero coding background. Real product shipped.",
           heroLead: "Isaacian × Cursor turned DeskPurr from idea to delivery.",
-          downloadBtn: "Download macOS Build",
+          downloadBtn: "Download Test Build (macOS)",
           githubBtn: "View on GitHub",
           madeTitle: "What We Built",
           madeDesc: "Covers four core scenes: idle, teaser wand, petting, and feeding. Isaacian led direction, Cursor shipped end-to-end.",
@@ -422,6 +431,15 @@
       }
       document.getElementById("lang-zh").addEventListener("click", () => setLang("zh"));
       document.getElementById("lang-en").addEventListener("click", () => setLang("en"));
+      document.getElementById("download-btn").addEventListener("click", () => {
+        if (typeof gtag === "function") {
+          gtag("event", "download_click", {
+            app: "DeskPurr",
+            platform: "macOS",
+            location: "hero_primary_button"
+          });
+        }
+      });
       setLang(localStorage.getItem("desktop-cat-site-lang") === "en" ? "en" : "zh");
     </script>
   </body>

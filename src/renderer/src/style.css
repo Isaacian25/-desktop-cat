@@ -454,11 +454,11 @@ body {
 }
 
 #cat-shell.feeding-run #cat {
-  transform: scaleX(var(--face-x, 1)) translateY(1px) scale(1) rotate(-1deg);
+  transform: scaleX(var(--face-x, 1)) translateY(1px) scale(1.26) rotate(-1deg);
 }
 
 #cat-shell.feeding-eat #cat {
-  transform: scaleX(var(--face-x, 1)) scale(1) translateY(1px);
+  transform: scaleX(var(--face-x, 1)) scale(1.14) translateY(1px);
 }
 
 #cat {
@@ -507,7 +507,7 @@ body {
 }
 
 #cat[data-phase='stalk'] {
-  transform: scaleX(var(--face-x)) scale(1) translateY(4px);
+  transform: scaleX(var(--face-x)) scale(1.2) translateY(4px);
 }
 
 #cat[data-phase='windup'] {
@@ -515,7 +515,7 @@ body {
 }
 
 #cat[data-phase='dash'] {
-  transform: scaleX(var(--face-x)) scale(1);
+  transform: scaleX(var(--face-x)) scale(1.32);
 }
 
 #petting-fx {
@@ -574,10 +574,10 @@ body {
 
 @keyframes butt-wiggle {
   from {
-    transform: scaleX(var(--face-x)) translateX(-3px) scale(1) rotate(-2deg);
+    transform: scaleX(var(--face-x)) translateX(-3px) scale(1.18) rotate(-2deg);
   }
   to {
-    transform: scaleX(var(--face-x)) translateX(3px) scale(1) rotate(2deg);
+    transform: scaleX(var(--face-x)) translateX(3px) scale(1.18) rotate(2deg);
   }
 }
 

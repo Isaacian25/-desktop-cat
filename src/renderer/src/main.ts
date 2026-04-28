@@ -91,6 +91,7 @@ const userPetBtn = document.getElementById('user-pet') as HTMLButtonElement | nu
 const userTeaserBtn = document.getElementById('user-teaser') as HTMLButtonElement | null
 const userMuteBtn = document.getElementById('user-mute') as HTMLButtonElement | null
 const userFeedbackBtn = document.getElementById('user-feedback') as HTMLButtonElement | null
+const userLocaleBtn = document.getElementById('user-locale') as HTMLButtonElement | null
 const userMoveBtn = document.getElementById('user-move') as HTMLButtonElement | null
 const userDevUiBtn = document.getElementById('user-dev-ui') as HTMLButtonElement | null
 const userExitBtn = document.getElementById('user-exit') as HTMLButtonElement | null
@@ -195,6 +196,7 @@ const soundCooldowns = new Map<string, number>()
 const activeSoundPlayers = new Map<string, HTMLAudioElement[]>()
 let audioMuted = false
 let feedbackDailyRemaining = 1
+let currentLocale: UserConfig['locale'] = 'zh'
 let repositionMode = false
 let catDragging = false
 let catDragOffsetX = 0
@@ -221,6 +223,65 @@ type Crumb = {
 
 const treats: Treat[] = []
 const crumbs: Crumb[] = []
+
+const MENU_I18N = {
+  zh: {
+    toggleAriaLabel: '打开宠物菜单',
+    menuAriaLabel: '宠物菜单',
+    menuTip: '点击右键展开菜单',
+    groupInteraction: '互动',
+    groupSystem: '系统',
+    feedTitle: '喂冻干',
+    feedSub: '切换到喂食模式',
+    petTitle: '撸猫',
+    petSub: '回到陪伴模式',
+    teaserTitle: '逗猫棒',
+    teaserSub: '切换到追逐互动',
+    muteOn: '声音：已开启',
+    muteOff: '声音：已静音',
+    muteSub: '点击切换静音',
+    feedbackTitle: '反馈建议 / Bug',
+    feedbackSub: '提交给开发团队',
+    feedbackLimitTip: '已达当日最大提交量1条',
+    localeZh: '语言：中文',
+    localeEn: '语言：English',
+    localeSub: '切换中文 / English',
+    moveTitle: '移动位置',
+    moveSub: '点击后拖拽猫咪定位，再次点击结束',
+    devUiTitle: 'UI参数',
+    devUiSub: '技术模式入口',
+    exitTitle: '退出程序',
+    exitSub: '关闭桌宠'
+  },
+  en: {
+    toggleAriaLabel: 'Open pet menu',
+    menuAriaLabel: 'Pet menu',
+    menuTip: 'Right-click to open menu',
+    groupInteraction: 'Interaction',
+    groupSystem: 'System',
+    feedTitle: 'Feed Treats',
+    feedSub: 'Switch to feeding mode',
+    petTitle: 'Pet Cat',
+    petSub: 'Back to companion mode',
+    teaserTitle: 'Teaser Wand',
+    teaserSub: 'Switch to chase interaction',
+    muteOn: 'Sound: On',
+    muteOff: 'Sound: Muted',
+    muteSub: 'Click to toggle mute',
+    feedbackTitle: 'Feedback / Bug',
+    feedbackSub: 'Send to the team',
+    feedbackLimitTip: 'Daily submission limit reached (1)',
+    localeZh: 'Language: Chinese',
+    localeEn: 'Language: English',
+    localeSub: 'Switch Chinese / English',
+    moveTitle: 'Move Position',
+    moveSub: 'Click to drag cat, click again to finish',
+    devUiTitle: 'UI Params',
+    devUiSub: 'Developer tools entry',
+    exitTitle: 'Exit App',
+    exitSub: 'Close desktop pet'
+  }
+} as const
 
 function applyUiPatch(nextUi: Partial<UiTuning>): void {
   ui.scale = Math.min(1.4, Math.max(0.8, nextUi.scale ?? ui.scale))
@@ -329,29 +390,56 @@ function interactionVolume(base: number): number {
   return Math.min(1, Math.max(0, base * INTERACTION_VOLUME_GAIN))
 }
 
+function menuText() {
+  return currentLocale === 'en' ? MENU_I18N.en : MENU_I18N.zh
+}
+
+function setMenuButtonText(button: HTMLButtonElement | null, title: string, sub: string): void {
+  if (!button) return
+  const titleEl = button.querySelector('.menu-title')
+  const subEl = button.querySelector('.menu-sub')
+  if (titleEl) titleEl.textContent = title
+  if (subEl) subEl.textContent = sub
+}
+
+function applyUserMenuLocale(): void {
+  const t = menuText()
+  if (userMenuToggleBtn) userMenuToggleBtn.setAttribute('aria-label', t.toggleAriaLabel)
+  if (userMenuEl) userMenuEl.setAttribute('aria-label', t.menuAriaLabel)
+  if (userMenuTipEl) userMenuTipEl.textContent = t.menuTip
+  const groupTitles = userMenuEl?.querySelectorAll('.menu-group-title')
+  if (groupTitles?.[0]) groupTitles[0].textContent = t.groupInteraction
+  if (groupTitles?.[1]) groupTitles[1].textContent = t.groupSystem
+  setMenuButtonText(userFeedBtn, t.feedTitle, t.feedSub)
+  setMenuButtonText(userPetBtn, t.petTitle, t.petSub)
+  setMenuButtonText(userTeaserBtn, t.teaserTitle, t.teaserSub)
+  setMenuButtonText(userFeedbackBtn, t.feedbackTitle, t.feedbackSub)
+  setMenuButtonText(userDevUiBtn, t.devUiTitle, t.devUiSub)
+  setMenuButtonText(userExitBtn, t.exitTitle, t.exitSub)
+  const localeTitle = currentLocale === 'en' ? t.localeEn : t.localeZh
+  setMenuButtonText(userLocaleBtn, localeTitle, t.localeSub)
+  syncMuteButtonText()
+  syncMoveButtonText()
+  syncFeedbackAvailability()
+}
+
 function syncMuteButtonText(): void {
-  const label = audioMuted ? '声音：已静音' : '声音：已开启'
-  if (!userMuteBtn) return
-  const span = userMuteBtn.querySelector('.menu-title')
-  if (span) span.textContent = label
+  const t = menuText()
+  const label = audioMuted ? t.muteOff : t.muteOn
+  setMenuButtonText(userMuteBtn, label, t.muteSub)
 }
 
 function syncFeedbackAvailability(): void {
   if (!userFeedbackBtn) return
+  const t = menuText()
   const disabled = feedbackDailyRemaining <= 0
   userFeedbackBtn.disabled = disabled
-  userFeedbackBtn.title = disabled ? '已达当日最大提交量1条' : ''
+  userFeedbackBtn.title = disabled ? t.feedbackLimitTip : ''
 }
 
 function syncMoveButtonText(): void {
-  if (!userMoveBtn) return
-  const active = repositionMode
-  const title = active ? '移动位置：开启' : '移动位置：关闭'
-  const sub = active ? '拖拽中，点击关闭' : '开启后拖拽猫咪定位'
-  const titleEl = userMoveBtn.querySelector('.menu-title')
-  const subEl = userMoveBtn.querySelector('.menu-sub')
-  if (titleEl) titleEl.textContent = title
-  if (subEl) subEl.textContent = sub
+  const t = menuText()
+  setMenuButtonText(userMoveBtn, t.moveTitle, t.moveSub)
 }
 
 function saveManualCatX(): void {
@@ -445,7 +533,8 @@ function renderConfig(config: UserConfig): void {
   applyFeedingPatch(config.feeding)
   applyEffectsPatch(config.effects)
   audioMuted = config.dnd.muted
-  syncMuteButtonText()
+  currentLocale = config.locale
+  applyUserMenuLocale()
   const dndBits = [
     `静音=${config.dnd.muted ? '开' : '关'}`,
     `透明=${config.dnd.translucent ? `${config.dnd.translucencyPercent}%` : '否'}`,
@@ -508,6 +597,7 @@ function setDevUiVisible(visible: boolean): void {
 function setUserMenuVisible(visible: boolean): void {
   const wasVisible = userMenuEl?.style.display !== 'none'
   if (userMenuEl) userMenuEl.style.display = visible ? 'grid' : 'none'
+  if (visible) syncMoveButtonText()
   if (!wasVisible && visible) tryPlaySound('uiOpen', 0.3, 0.2, 0.3)
   if (wasVisible && !visible) tryPlaySound('uiClose', 0.3, 0.2, 0.3)
   if (!visible) userMenuPinnedOpen = false
@@ -1197,6 +1287,12 @@ function bindUserEvents(): void {
     feedbackDailyRemaining = status.remainingToday
     syncFeedbackAvailability()
   })
+  userLocaleBtn?.addEventListener('click', async () => {
+    if (!apiRef) return
+    currentLocale = currentLocale === 'zh' ? 'en' : 'zh'
+    await apiRef.patchConfig({ locale: currentLocale })
+    applyUserMenuLocale()
+  })
   userMoveBtn?.addEventListener('click', () => {
     repositionMode = !repositionMode
     catDragging = false
@@ -1491,17 +1587,6 @@ async function boot(): Promise<void> {
     if (event.key.toLowerCase() === 'u' && devUiVisible) {
       const hidden = uiPanelEl?.style.display === 'none'
       setTunerVisible(hidden)
-    }
-    if (event.key === '1') {
-      await setBreedById('chinese-garden')
-      return
-    }
-    if (event.key === '2') {
-      await setBreedById('abyssinian')
-      return
-    }
-    if (event.key === '3') {
-      await setBreedById('bengal')
     }
   })
 

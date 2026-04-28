@@ -24,13 +24,6 @@
       <button id="user-menu-toggle" type="button" aria-label="打开宠物菜单">🐾</button>
       <div id="user-menu-tip" aria-hidden="true">点击右键展开菜单</div>
       <div id="user-menu" role="group" aria-label="宠物菜单">
-        <div class="menu-group-title">选择猫咪品种 <span class="kbd">1/2/3</span></div>
-        <select id="user-breed">
-          <option value="chinese-garden">中华田园猫（1）</option>
-          <option value="abyssinian">阿比西尼亚猫（2）</option>
-          <option value="bengal">豹猫（3）</option>
-        </select>
-
         <div class="menu-group-title">互动</div>
         <button id="user-feed" type="button">
           <div class="menu-main"><span class="menu-title">喂冻干</span><span class="menu-sub">切换到喂食模式</span></div>
@@ -54,8 +47,12 @@
           <div class="menu-main"><span class="menu-title">反馈建议 / Bug</span><span class="menu-sub">提交给开发团队</span></div>
           <span class="kbd">F</span>
         </button>
+        <button id="user-locale" type="button">
+          <div class="menu-main"><span class="menu-title">语言：中文</span><span class="menu-sub">切换中文 / English</span></div>
+          <span class="kbd">ZH/EN</span>
+        </button>
         <button id="user-move" type="button">
-          <div class="menu-main"><span class="menu-title">移动位置：关闭</span><span class="menu-sub">开启后拖拽猫咪定位</span></div>
+          <div class="menu-main"><span class="menu-title">移动位置</span><span class="menu-sub">点击后拖拽猫咪定位，再次点击结束</span></div>
           <span class="kbd">G</span>
         </button>
         <button id="user-dev-ui" type="button">
